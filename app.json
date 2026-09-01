@@ -2,7 +2,7 @@
   "id": "2cc9585b-d11d-4b9c-b39e-b8558554e040",
   "name": "Tigerpak-BC",
   "publisher": "Tigerpak",
-  "version": "26.09.1.01",
+  "version": "26.09.1.02",
   "brief": "",
   "target": "Cloud",
   "description": "",
@@ -15,7 +15,7 @@
     {
     "id" : "c4bae218-fc58-4850-a39e-60a59373688f",
     "name" : "Tigerpak-Base",
-    "version" : "2026.9.1.2",
+    "version" : "2026.9.1.1",
     "publisher" : "Wild-Tech"
     },
     {
