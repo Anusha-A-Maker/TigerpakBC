@@ -202,6 +202,49 @@ tableextension 70101 "Item_T-Ext" extends Item
 
         }
 
+        field(70400; "UN No."; Option)
+        {
+            Caption = 'UN No.';
+            DataClassification = ToBeClassified;
+            OptionMembers = " ";
+        }
+        field(70401; "Dangerous Goods Code"; option)
+        {
+            Caption = 'Dangerous Goods Code';
+            DataClassification = ToBeClassified;
+            optionMembers = " ";
+        }
+        field(70402; "Packaging Group"; Option)
+        {
+            Caption = 'Packaging Group';
+            DataClassification = ToBeClassified;
+            OptionMembers = " ";
+        }
+        field(70403; "Shipping Name"; Option)
+        {
+            Caption = 'Shipping Name';
+            DataClassification = ToBeClassified;
+            OptionMembers = " ";
+        }
+        field(70404; "Hazchem Code"; Option)
+        {
+            Caption = 'Hazchem Code';
+            DataClassification = ToBeClassified;
+            OptionMembers = " ";
+        }
+        field(70405; "Package Type"; Option)
+        {
+            Caption = 'Package Type';
+            DataClassification = ToBeClassified;
+            OptionMembers = " ";
+        }
+
+        field(7006; "Pack Quantity"; Text[50])
+        {
+            Caption = 'Pack Quantity';
+            DataClassification = ToBeClassified;
+        }
+
     }
     trigger OnInsert()
     var
