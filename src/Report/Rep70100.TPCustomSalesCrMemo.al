@@ -354,15 +354,15 @@ report 70100 "TP Custom Sales Cr. Memo"
             column(VATRegistrationNo_Lbl; GetCustomerVATRegistrationNumberLbl())
             {
             }
-            column(GlobalLocationNumber; GetCustomerGlobalLocationNumber())
-            {
-            }
-            column(GlobalLocationNumber_Lbl; GetCustomerGlobalLocationNumberLbl())
-            {
-            }
-            column(LegalEntityType; Cust.GetLegalEntityType())
-            {
-            }
+            // column(GlobalLocationNumber; GetCustomerGlobalLocationNumber())
+            // {
+            // }
+            // column(GlobalLocationNumber_Lbl; GetCustomerGlobalLocationNumberLbl())
+            // {
+            // }
+            // column(LegalEntityType; Cust.GetLegalEntityType())
+            // {
+            // }
             column(LegalEntityType_Lbl; Cust.GetLegalEntityTypeLbl())
             {
             }
