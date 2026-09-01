@@ -126,6 +126,55 @@ pageextension
                 }
             }
 
+            group("Dangerous Goods")
+            {
+                Caption = 'Dangerous Goods';
+
+                field("UN No."; Rec."UN No.")
+                {
+                    Caption = 'UN No.';
+                    ApplicationArea = All;
+
+                }
+                field("Dangerous Goods Code"; Rec."Dangerous Goods Code")
+                {
+                    Caption = 'Dangerous Goods Code';
+                    ApplicationArea = All;
+
+                }
+                field("Packing Group"; Rec."Packing Group")
+                {
+                    Caption = 'Packing Group';
+                    ApplicationArea = All;
+
+                }
+                field("Shipping Name"; Rec."Shipping Name")
+                {
+                    Caption = 'Shipping Name';
+                    ApplicationArea = All;
+
+                }
+                field("Hazchem Code"; Rec."Hazchem Code")
+                {
+                    Caption = 'Hazchem Code';
+                    ApplicationArea = All;
+
+                }
+                field("Package Type"; Rec."Package Type")
+                {
+                    Caption = 'Package Type';
+                    ApplicationArea = All;
+
+                }
+                field("Pack Quantity"; Rec."Pack Quantity")
+                {
+                    Caption = 'Pack Quantity';
+                    ApplicationArea = All;
+
+                }
+
+            }
+
 
         }
 

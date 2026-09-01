@@ -214,9 +214,9 @@ tableextension 70101 "Item_T-Ext" extends Item
             DataClassification = ToBeClassified;
             optionMembers = " ";
         }
-        field(70402; "Packaging Group"; Option)
+        field(70402; "Packing Group"; Option)
         {
-            Caption = 'Packaging Group';
+            Caption = 'Packing Group';
             DataClassification = ToBeClassified;
             OptionMembers = " ";
         }
@@ -244,6 +244,7 @@ tableextension 70101 "Item_T-Ext" extends Item
             Caption = 'Pack Quantity';
             DataClassification = ToBeClassified;
         }
+
 
     }
     trigger OnInsert()
