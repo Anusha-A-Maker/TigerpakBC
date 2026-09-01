@@ -20,12 +20,12 @@ tableextension 70127 "CRM AccountExt" extends "CRM Account"
             Description = '';
             Caption = 'Company Size';
         }
-        // field(70120; "Last Appointment Date"; Date)
-        // {
-        //     ExternalName = 'wtec_lastappointmentdate';
-        //     ExternalType = 'Date';
-        //     Description = '';
-        //     Caption = 'Last Appointment Date';
-        // }
+        field(70120; "Last Appointment Date"; Date)
+        {
+            ExternalName = 'wtec_lastappointmentdate';
+            ExternalType = 'DateTime';
+            Description = '';
+            Caption = 'Last Appointment Date';
+        }
     }
 }
