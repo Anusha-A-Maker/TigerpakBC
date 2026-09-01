@@ -72,7 +72,7 @@ tableextension 70101 "Item_T-Ext" extends Item
         field(70108; Inventory_QLD; Decimal)
         {
             CalcFormula = sum("Item Ledger Entry".Quantity where("Item No." = field("No."),
-                                                                  "Location Code" = filter('QLD-LG'),
+                                                                  "Location Code" = filter('QLD-BB'),
                                                                   "Global Dimension 1 Code" = field("Global Dimension 1 Filter"),
                                                                   "Global Dimension 2 Code" = field("Global Dimension 2 Filter"),
                                                                   "Drop Shipment" = field("Drop Shipment Filter"),

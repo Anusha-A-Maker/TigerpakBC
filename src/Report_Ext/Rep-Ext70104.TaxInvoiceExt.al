@@ -46,6 +46,11 @@ reportextension 70104 "Tax - Invoice Ext" extends "Tax - Invoice"
             Type = RDLC;
             LayoutFile = './Layouts/XMasTaxInvoice.rdl';
         }
+        layout("Taxinvoice_InvoiceTO_Bill-ToAddress")
+        {
+            Type = RDLC;
+            LayoutFile = './Layouts/Taxinvoice_InvoiceTO_Bill-ToAddress.rdl';
+        }
     }
     var
         XmasTradingHours: Text[100];
