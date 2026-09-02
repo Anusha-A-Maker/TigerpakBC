@@ -202,41 +202,41 @@ tableextension 70101 "Item_T-Ext" extends Item
 
         }
 
-        field(70400; "UN No."; Option)
+        field(70400; "UN No."; Code[20])
         {
             Caption = 'UN No.';
             DataClassification = ToBeClassified;
-            OptionMembers = " ";
+            TableRelation = "UN Number_DG"."No.";
         }
-        field(70401; "Dangerous Goods Code"; option)
+        field(70401; "Dangerous Goods Code"; Code[20])
         {
             Caption = 'Dangerous Goods Code';
             DataClassification = ToBeClassified;
-            optionMembers = " ";
+            tableRelation = "Dangerous Goods".Code;
         }
-        field(70402; "Packing Group"; Option)
+        field(70402; "Packing Group"; Text[100])
         {
             Caption = 'Packing Group';
             DataClassification = ToBeClassified;
-            OptionMembers = " ";
+            TableRelation = "Packing Group_DG".Name;
         }
-        field(70403; "Shipping Name"; Option)
+        field(70403; "Shipping Name"; Text[100])
         {
             Caption = 'Shipping Name';
             DataClassification = ToBeClassified;
-            OptionMembers = " ";
+            TableRelation = "Shipping_DG".Name;
         }
-        field(70404; "Hazchem Code"; Option)
+        field(70404; "Hazchem Code"; Code[20])
         {
             Caption = 'Hazchem Code';
             DataClassification = ToBeClassified;
-            OptionMembers = " ";
+            TableRelation = "Hazchem_DG".Code;
         }
-        field(70405; "Package Type"; Option)
+        field(70405; "Package Type"; Text[100])
         {
             Caption = 'Package Type';
             DataClassification = ToBeClassified;
-            OptionMembers = " ";
+            TableRelation = "Package Type_DG".Name;
         }
 
         field(7006; "Pack Quantity"; Text[50])
