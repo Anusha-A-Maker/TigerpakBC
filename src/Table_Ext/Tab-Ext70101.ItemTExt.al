@@ -201,6 +201,56 @@ tableextension 70101 "Item_T-Ext" extends Item
             DataClassification = ToBeClassified;
             TableRelation = Customer."No.";
         }
+        field(70400; "UN No."; Code[20])
+        {
+            Caption = 'UN No.';
+            DataClassification = ToBeClassified;
+            tableRelation = "UN Number_DG"."No.";
+
+        }
+        field(70401; "Dangerous Goods Code"; Code[20])
+        {
+            Caption = 'Dangerous Goods Code';
+            DataClassification = ToBeClassified;
+            TableRelation = "Dangerous Goods"."Code";
+
+        }
+
+        field(70402; "Packing Group"; Text[100])
+        {
+
+            Caption = 'Packing Group';
+            DataClassification = ToBeClassified;
+            tableRelation = "Packing Group_DG"."Name";
+
+        }
+        field(70403; "Shipping Name"; Text[100])
+        {
+            Caption = 'Shipping Name';
+            DataClassification = ToBeClassified;
+            tableRelation = Shipping_DG."Name";
+
+        }
+        field(70404; "Hazchem Code"; Code[20])
+        {
+            Caption = 'Hazchem Code';
+            DataClassification = ToBeClassified;
+            tableRelation = Hazchem_DG."Code";
+        }
+        field(70405; "Package Type"; Text[100])
+        {
+            Caption = 'Package Type';
+            DataClassification = ToBeClassified;
+            tableRelation = "Package Type_DG"."Name";
+
+        }
+
+        field(70406; "Pack Quantity"; Text[50])
+        {
+            Caption = 'Pack Quantity';
+            DataClassification = ToBeClassified;
+        }
+
 
     }
     trigger OnInsert()
