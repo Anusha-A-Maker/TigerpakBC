@@ -1,6 +1,7 @@
 namespace ALProject.ALProject;
 
 using Microsoft.Warehouse.Structure;
+using Microsoft.Warehouse.Ledger;
 
 tableextension 70119 "Bin Content TExt" extends "Bin Content"
 {
@@ -29,6 +30,18 @@ tableextension 70119 "Bin Content TExt" extends "Bin Content"
             DataClassification = ToBeClassified;
             Editable = false;
 
+        }
+
+        field(70121; "GIT Quantity"; Decimal)   //GIT Quantity - Justin
+        {
+            Caption = 'GIT Quantity';
+            CalcFormula = sum("Warehouse Entry".Quantity where("Location Code" = const('GIT'),
+                                                               "Item No." = field("Item No."),
+                                                               "Variant Code" = field("Variant Code"),
+                                                               "Unit of Measure Code" = field("Unit of Measure Code")));
+            DecimalPlaces = 0 : 5;
+            Editable = false;
+            FieldClass = FlowField;
         }
     }
 }

@@ -29,6 +29,17 @@ pageextension 70140 "Bin Contents Ext" extends "Bin Contents"
                 Visible = true;
 
             }
+
+            field("GIT Quantity"; Rec."GIT Quantity")
+            {
+                ApplicationArea = All;
+                Caption = 'GIT Quantity';
+                ToolTip = 'Displays the GIT quantity for the item.';
+                Editable = false;
+                Enabled = true;
+                Visible = true;
+
+            }
         }
 
         addafter("Item No.")
