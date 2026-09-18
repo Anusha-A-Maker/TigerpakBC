@@ -201,6 +201,11 @@ tableextension 70101 "Item_T-Ext" extends Item
             TableRelation = Customer."No.";
 
         }
+        field(70118; "Exclude-Plytix"; Boolean)  //Tommy Request - 18/09/2026
+        {
+            Caption = 'Exclude-Plytix';
+            DataClassification = ToBeClassified;
+        }
 
         field(70400; "UN No."; Code[20])
         {
@@ -239,7 +244,7 @@ tableextension 70101 "Item_T-Ext" extends Item
             TableRelation = "Package Type_DG".Name;
         }
 
-        field(7006; "Pack Quantity"; Text[50])
+        field(70406; "Pack Quantity"; Text[50])
         {
             Caption = 'Pack Quantity';
             DataClassification = ToBeClassified;
