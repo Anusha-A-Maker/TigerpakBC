@@ -18,8 +18,22 @@ pageextension
 
             }
 
-
         }
+
+        addafter(Classification) //Tommy Request - 18/09/2026
+        {
+            field("Exclude-Plytix"; Rec."Exclude-Plytix")
+            {
+                ApplicationArea = All;
+                Caption = 'Exclude-Plytix';
+                ToolTip = 'Exclude-Plytix';
+                Editable = true;
+                Enabled = true;
+                Visible = true;
+
+            }
+        }
+
         addbefore("VAT Prod. Posting Group")
         {
             field("Gen. Prod. Posting Group New"; Rec."Gen. Prod. Posting Group new")

@@ -201,6 +201,13 @@ tableextension 70101 "Item_T-Ext" extends Item
             DataClassification = ToBeClassified;
             TableRelation = Customer."No.";
         }
+
+        field(70118; "Exclude-Plytix"; Boolean)  //Tommy Request - 18/09/2026
+        {
+            Caption = 'Exclude-Plytix';
+            DataClassification = ToBeClassified;
+        }
+
         field(70400; "UN No."; Code[20])
         {
             Caption = 'UN No.';
