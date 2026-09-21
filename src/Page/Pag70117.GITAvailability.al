@@ -1,5 +1,6 @@
 namespace TigerpakBC.TigerpakBC;
 using Microsoft.Inventory.Transfer;
+using Microsoft.Inventory.Location;
 
 page 70117 "GIT Availability"
 {
@@ -20,6 +21,12 @@ page 70117 "GIT Availability"
         {
             repeater(General)
             {
+                field(DocumentNo; Rec."Document No.")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Document No.';
+                    ToolTip = 'Specifies the document number of the transfer order.';
+                }
                 field(Location; Rec.Location)
                 {
                     ApplicationArea = All;
@@ -65,18 +72,28 @@ page 70117 "GIT Availability"
     local procedure LoadGoodsInTransit()
     var
         TransferLines: Record "Transfer Line";
+        EntryNo: Integer;
+        SKU: Record "Stockkeeping Unit";
     begin
         Rec.DeleteAll();
         if TransferLines.FindSet() then
             repeat
                 if TransferLines."Qty. Shipped (Base)" > TransferLines."Qty. Received (Base)" then begin
+                    EntryNo += 1;
                     Rec.Init();
+                    Rec."Entry No." := EntryNo;
+                    Rec."Document No." := TransferLines."Document No.";
                     Rec.Location := TransferLines."Transfer-from Code";
                     Rec.Item := TransferLines."Item No.";
                     Rec.Description := TransferLines.Description;
                     Rec.Quantity := TransferLines."Qty. Shipped (Base)" - TransferLines."Qty. Received (Base)";
                     // Rec."Unit Cost" := TransferLines."Unit Cost";
                     Rec."Receiving Location" := TransferLines."Transfer-to Code";
+                    SKU.SetRange("Item No.", Rec."Item");
+                    SKU.SetRange("Location Code", Rec.Location);
+                    if SKU.FindFirst() then begin
+                        Rec."Unit Cost" := SKU."Unit Cost";
+                    end;
                     Rec.Insert();
                 end;
             until TransferLines.Next() = 0;

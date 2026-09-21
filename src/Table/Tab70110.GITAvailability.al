@@ -46,13 +46,22 @@ table 70110 "GIT Availability"
             DataClassification = ToBeClassified;
             TableRelation = Location.Code;
         }
+        field(8; "Document No."; Code[20])
+        {
+            Caption = 'Document No.';
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
     {
-        key(PK; "Entry No.")
+        key(PK1; "Entry No.")
         {
             Clustered = true;
+        }
+        key(PK2; "Document No.")
+        {
+            Clustered = false;
         }
     }
 }
