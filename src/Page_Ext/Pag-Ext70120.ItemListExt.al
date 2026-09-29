@@ -27,6 +27,11 @@ pageextension 70120 "Item List Ext" extends "Item List"
                 Caption = 'Item Category Group';
                 ApplicationArea = All;
             }
+            field("Exclude-Plytix"; Rec."Exclude-Plytix")  //Exclude-Plytix field added to Item list page for Web Services ItemsAzure- Tommy
+            {
+                Caption = 'Exclude-Plytix';
+                ApplicationArea = All;
+            }
 
         }
 

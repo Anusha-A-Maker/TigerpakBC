@@ -42,5 +42,8 @@ permissionset 70101 GeneratedPermtp
         page "Packing Group_DG" = X,
         page Shipping_DG = X,
         page "TP_Price List Line" = X,
-        page "UN Number_DG" = X;
+        page "UN Number_DG" = X,
+        tabledata "GIT Availability" = RIMD,
+        table "GIT Availability" = X,
+        page "GIT Availability" = X;
 }
