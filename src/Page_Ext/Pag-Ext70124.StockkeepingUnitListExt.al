@@ -62,8 +62,28 @@ pageextension 70124 "Stockkeeping Unit List Ext" extends "Stockkeeping Unit List
 
             }
 
-        }
+            action("Delete Blank Code")
+            {
+                ApplicationArea = All;
+                Caption = 'Delete Blank Code';
+                ToolTip = 'Delete Blank Code';
+                Image = Delete;
 
+                trigger OnAction()
+                var
+                    SKU: Record "Stockkeeping Unit";
+                begin
+                    if SKU.FindFirst() then
+                        repeat
+                            if SKU."Item No." = 'TEST001' then begin
+                                SKU.Delete();
+                            end;
+                        until SKU.Next() = 0;
+                end;
+
+            }
+
+        }
     }
 
 
