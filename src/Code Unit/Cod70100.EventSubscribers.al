@@ -132,7 +132,15 @@ codeunit 70100 "EventSubscribers1"
 
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Transfer Line", OnBeforeOnInsert, '', false, false)]
+    local procedure OnBeforeOnInsert(var TransferLine: Record "Transfer Line"; var xTransferLine: Record "Transfer Line"; TransferHeader: Record "Transfer Header"; var IsHandled: Boolean)
 
+
+
+    begin
+        if TransferHeader.Get(TransferLine."Document No.") then
+            TransferLine."Posting Date" := TransferHeader."Posting Date";
+    end;
 
 
 

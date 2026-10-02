@@ -65,6 +65,12 @@ page 70116 "GIT Availability"
                     Caption = 'Receiving Location';
                     ToolTip = 'Specifies the location receiving the goods.';
                 }
+                field("Posting Date"; Rec."Posting Date")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Posting Date';
+                    ToolTip = 'Specifies the posting date of the transfer order.';
+                }
             }
         }
     }
@@ -87,7 +93,7 @@ page 70116 "GIT Availability"
                     Rec.Item := TransferLines."Item No.";
                     Rec.Description := TransferLines.Description;
                     Rec.Quantity := TransferLines."Qty. Shipped (Base)" - TransferLines."Qty. Received (Base)";
-                    // Rec."Unit Cost" := TransferLines."Unit Cost";
+                    Rec."Posting Date" := TransferLines."Posting Date";
                     Rec."Receiving Location" := TransferLines."Transfer-to Code";
                     SKU.SetRange("Item No.", Rec."Item");
                     SKU.SetRange("Location Code", Rec.Location);
