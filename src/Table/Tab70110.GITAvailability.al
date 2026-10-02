@@ -51,6 +51,11 @@ table 70110 "GIT Availability"
             Caption = 'Document No.';
             DataClassification = ToBeClassified;
         }
+        field(9; "Posting Date"; Date)
+        {
+            Caption = 'Posting Date';
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

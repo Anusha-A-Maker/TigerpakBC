@@ -52,6 +52,12 @@ page 70117 "GIT Availability"
                     Editable = false;
                     ToolTip = 'Specifies the quantity of the item that has been shipped but not received.';
                 }
+                field("Posting Date"; Rec."Posting Date")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Posting Date';
+                    ToolTip = 'Specifies the posting date of the transfer order.';
+                }
                 field("Unit Cost"; Rec."Unit Cost")
                 {
                     ApplicationArea = All;
@@ -87,8 +93,8 @@ page 70117 "GIT Availability"
                     Rec.Item := TransferLines."Item No.";
                     Rec.Description := TransferLines.Description;
                     Rec.Quantity := TransferLines."Qty. Shipped (Base)" - TransferLines."Qty. Received (Base)";
-                    // Rec."Unit Cost" := TransferLines."Unit Cost";
                     Rec."Receiving Location" := TransferLines."Transfer-to Code";
+                    Rec."Posting Date" := TransferLines."Posting Date";
                     SKU.SetRange("Item No.", Rec."Item");
                     SKU.SetRange("Location Code", Rec.Location);
                     if SKU.FindFirst() then begin
