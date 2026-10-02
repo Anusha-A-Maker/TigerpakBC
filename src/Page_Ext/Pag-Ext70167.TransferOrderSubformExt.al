@@ -20,6 +20,8 @@ pageextension 70167 "Transfer Order Subform Ext" extends "Transfer Order Subform
         }
     }
 
+
+
     actions
     {
         addafter(ExplodeBOM_Functions)
@@ -45,4 +47,15 @@ pageextension 70167 "Transfer Order Subform Ext" extends "Transfer Order Subform
             }
         }
     }
+
+    //     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    //     var
+    //         TransferHeader: Record "Transfer Header";
+    //     begin
+    //         Rec.SetRange("Document No.", TransferHeader."No.");
+    //         if Rec.FindSet() then begin
+    //             Rec."Posting Date" := TransferHeader."Posting Date";
+    //             Rec.Modify();
+    //         end;
+    //     end;
 }

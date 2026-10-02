@@ -22,5 +22,18 @@ tableextension 70130 "Transfer Header TExt" extends "Transfer Header"
             end;
         }
     }
+
+    trigger oninsert()
+    var
+        TransferLine: Record "Transfer Line";
+    begin
+        TransferLine.SetRange("Document No.", Rec."No.");
+        if TransferLine.FindSet() then begin
+            repeat
+                TransferLine."Posting Date" := Rec."Posting Date";
+                TransferLine.Modify();
+            until TransferLine.Next() = 0;
+        end;
+    end;
 }
 

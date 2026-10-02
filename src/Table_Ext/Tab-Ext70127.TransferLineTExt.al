@@ -16,7 +16,8 @@ tableextension 70127 "Transfer Line TExt" extends "Transfer Line"
                 TransferHeader: Record "Transfer Header";
             begin
 
-                if TransferHeader.Get("Document No.") then begin
+                Rec.SetRange("Document No.", TransferHeader."No.");
+                if Rec.FindSet() then begin
                     Rec."Posting Date" := TransferHeader."Posting Date";
                     Rec.Modify();
                 end;
@@ -24,6 +25,4 @@ tableextension 70127 "Transfer Line TExt" extends "Transfer Line"
             end;
         }
     }
-
-
 }
