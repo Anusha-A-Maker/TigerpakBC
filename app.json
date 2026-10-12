@@ -2,7 +2,7 @@
   "id": "2cc9585b-d11d-4b9c-b39e-b8558554e040",
   "name": "Tigerpak-BC",
   "publisher": "Tigerpak",
-  "version": "26.10.02.02",
+  "version": "26.10.08.01",
   "brief": "",
   "target": "Cloud",
   "description": "",
@@ -15,20 +15,20 @@
     {
     "id" : "c4bae218-fc58-4850-a39e-60a59373688f",
     "name" : "Tigerpak-Base",
-    "version" : "2026.9.1.7",
+    "version" : "2026.10.5.0",
     "publisher" : "Wild-Tech"
     },
     {
       "id" : "754368ed-2446-4ced-afb2-c693c70dc5cb",
       "name" : "TigerPak - Email Processor",
-      "version" : "26.26.7.3",
+      "version" : "28.10.5.2",
       "publisher" : "Wild-Tech"
       }  
       ,
       {
       "id" : "2cac2e2b-e84d-4770-8dcd-0aa40c8238b4",
       "name" : "Tigerpak-Reports",
-      "version" : "25.10.6.1",
+      "version" : "28.10.5.0",
       "publisher" : "Wild-Tech"
       },
         {
@@ -56,7 +56,7 @@
     {
       "id" : "6da8dd2f-e698-461f-9147-8e404244dd85",
       "name" : " Continia Document Capture",
-      "version" : "27.3.0.330595",
+      "version" : "28.6.0.393760",
       "publisher" : "Continia Software"
       }
   
