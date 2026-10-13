@@ -60,7 +60,22 @@ tableextension 70114 "Sales Invoice Header TExt" extends "Sales Invoice Header"
 
         }
 
+        field(70170; "Tracking Assigned At"; DateTime)
+        {
+            Caption = 'Package Tracking Assigned At';
+            DataClassification = ToBeClassified;
+        }
+        modify("Package Tracking No.")
+        {
+            Caption = 'Package Tracking No.';
+
+            trigger OnAfterValidate()
+            begin
+                if "Package Tracking No." <> '' then
+                    "Tracking Assigned At" := CurrentDateTime();
+            end;
+        }
 
     }
-}
 
+}
