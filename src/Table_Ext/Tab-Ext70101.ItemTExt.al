@@ -26,10 +26,14 @@ tableextension 70101 "Item_T-Ext" extends Item
             Trigger OnValidate()
             begin
 
-                if ("US-Expiry Date" <> 0D) and ("US-Expiry Date" <= CalcDate('<1M>', Today())) then
-                    "Expired/Cancelled" := true
-                else
+                if ("US-Expiry Date" > Today()) and ("US-Expiry Date" <= CalcDate('<1M>', Today())) then begin
+                    "Expired/Cancelled" := true;
+                    "Purchasing Blocked" := true;
+                end
+                else begin
                     "Expired/Cancelled" := false;
+                    "Purchasing Blocked" := false;
+                end;
             end;
 
         }
