@@ -22,6 +22,16 @@ tableextension 70101 "Item_T-Ext" extends Item
         {
             Caption = 'US-Expiry Date';
             DataClassification = ToBeClassified;
+
+            Trigger OnValidate()
+            begin
+
+                if ("US-Expiry Date" <> 0D) and ("US-Expiry Date" <= CalcDate('<1M>', Today())) then
+                    "Expired/Cancelled" := true
+                else
+                    "Expired/Cancelled" := false;
+            end;
+
         }
         field(70104; "US-Agreed Months Stock on Hand"; Decimal)
         {
@@ -31,6 +41,11 @@ tableextension 70101 "Item_T-Ext" extends Item
         field(70105; "US-Actual Stock on Hand"; Decimal)
         {
             Caption = 'US-Actual Stock on Hand';
+            DataClassification = ToBeClassified;
+        }
+        field(70120; "Expired/Cancelled"; Boolean)
+        {
+            Caption = 'Expired/Cancelled';
             DataClassification = ToBeClassified;
         }
 

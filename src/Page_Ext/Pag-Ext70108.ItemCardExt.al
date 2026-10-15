@@ -108,12 +108,12 @@ pageextension
 
                 }
 
-                field("US-Actual Usage"; Rec."US-Actual Usage")
-                {
-                    Caption = 'US-Actual Usage';
-                    ApplicationArea = All;
+                // field("US-Actual Usage"; Rec."US-Actual Usage")
+                // {
+                //     Caption = 'US-Actual Usage';
+                //     ApplicationArea = All;
 
-                }
+                // }
                 field("US- Agreement Start Date"; Rec."US- Agreement Start Date")
                 {
                     Caption = 'US-Agreement Start Date';
@@ -132,12 +132,18 @@ pageextension
                     ApplicationArea = All;
 
                 }
-                field("US-Actual Stock on Hand"; Rec."US-Actual Stock on Hand")
+                field("Expired/Cancelled"; Rec."Expired/Cancelled")
                 {
-                    Caption = 'US-Actual Stock on Hand';
+                    Caption = 'Expired/Cancelled';
                     ApplicationArea = All;
 
                 }
+                // field("US-Actual Stock on Hand"; Rec."US-Actual Stock on Hand")
+                // {
+                //     Caption = 'US-Actual Stock on Hand';
+                //     ApplicationArea = All;
+
+                // }
             }
 
             group("Dangerous Goods")
