@@ -5,6 +5,7 @@ using Microsoft.CRM.Contact;
 
 tableextension 70114 "Sales Invoice Header TExt" extends "Sales Invoice Header"
 {
+
     fields
     {
         field(70130; "Margin Amount_New"; Decimal)
@@ -51,7 +52,17 @@ tableextension 70114 "Sales Invoice Header TExt" extends "Sales Invoice Header"
             CalcFormula = Lookup(Contact."E-Mail" where("No." = field("Bill-to Contact No.")));
 
         }
+
+        field(70170; "Tracking Assigned At"; DateTime)
+        {
+            Caption = 'Package Tracking Assigned At';
+            DataClassification = ToBeClassified;
+        }
+        modify("Package Tracking No.")
+        {
+            Caption = 'Package Tracking No.';
+        }
+
     }
 
 }
-

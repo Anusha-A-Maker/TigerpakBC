@@ -3,6 +3,21 @@ codeunit 70100 "EventSubscribers1"
     Permissions = tabledata 110 = RMID, tabledata 121 = RMID, tabledata 112 = RIMD, tabledata 114 = rmid, tabledata 7322 = RMID, tabledata 21 = rmid, tabledata 113 = rmid, tabledata 5772 = rmid;
 
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Invoice Header", OnAfterInsertEvent, '', false, false)]
+    local procedure SetTrackingAssignedAtOnInsert(var Rec: Record "Sales Invoice Header"; RunTrigger: Boolean)
+    begin
+        if (Rec."Package Tracking No." <> '') and (Rec."Tracking Assigned At" = 0DT) then
+            Rec."Tracking Assigned At" := CurrentDateTime();
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Invoice Header", OnAfterModifyEvent, '', false, false)]
+    local procedure SetTrackingAssignedAtOnTrackingChange(var Rec: Record "Sales Invoice Header"; var xRec: Record "Sales Invoice Header"; RunTrigger: Boolean)
+    begin
+        if (Rec."Package Tracking No." <> '') and (Rec."Package Tracking No." <> xRec."Package Tracking No.") then
+            Rec."Tracking Assigned At" := CurrentDateTime();
+    end;
+
+
 
 
     [EventSubscriber(ObjectType::Page, Page::"Posted Sales Inv. - Update", OnAfterRecordChanged, '', false, false)]
@@ -1002,4 +1017,3 @@ codeunit 70100 "EventSubscribers1"
 
 
 }
-
