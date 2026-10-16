@@ -10,10 +10,19 @@ codeunit 70100 "EventSubscribers1"
             Rec."Tracking Assigned At" := CurrentDateTime();
     end;
 
+
+    // [EventSubscriber(ObjectType::Table, Database::"Sales Invoice Header", OnAfterModifyEvent, '', false, false)]
+    // local procedure SetTrackingAssignedAtOnModify(var Rec: Record "Sales Invoice Header"; RunTrigger: Boolean)
+    // begin
+    //     if (Rec."Package Tracking No." <> '') and (Rec."Tracking Assigned At" = 0DT) then
+    //         Rec."Tracking Assigned At" := CurrentDateTime();
+    // end;
+
     [EventSubscriber(ObjectType::Table, Database::"Sales Invoice Header", OnAfterModifyEvent, '', false, false)]
     local procedure SetTrackingAssignedAtOnTrackingChange(var Rec: Record "Sales Invoice Header"; var xRec: Record "Sales Invoice Header"; RunTrigger: Boolean)
     begin
-        if (Rec."Package Tracking No." <> '') and (Rec."Package Tracking No." <> xRec."Package Tracking No.") then
+        if (Rec."Package Tracking No." <> '') and (Rec."Tracking Assigned At" = 0DT) then
+            //if (Rec."Package Tracking No." <> '') and (Rec."Package Tracking No." <> xRec."Package Tracking No.") then
             Rec."Tracking Assigned At" := CurrentDateTime();
     end;
 
@@ -27,7 +36,8 @@ codeunit 70100 "EventSubscribers1"
         IsChanged := (SalesInvoiceHeader."Payment Terms Code" <> xSalesInvoiceHeader."Payment Terms Code") or (SalesInvoiceHeader."External Document No." <> xSalesInvoiceHeader."External Document No.") or (SalesInvoiceHeader."due date" <> xSalesInvoiceHeader."Due Date") or
        (SalesInvoiceHeader."Posting Description" <> xSalesInvoiceHeader."Posting Description") or (SalesInvoiceHeader."Promised Pay Date" <> xSalesInvoiceHeader."Promised Pay Date") or
        (SalesInvoiceHeader."Dispute Status" <> xSalesInvoiceHeader."Dispute Status") or (SalesInvoiceHeader."Payment Method Code" <> xSalesInvoiceHeader."Payment Method Code") or
-       (SalesInvoiceHeader."Payment Reference" <> xSalesInvoiceHeader."Payment Reference") or (SalesInvoiceHeader."Company Bank Account Code" <> xSalesInvoiceHeader."Company Bank Account Code");
+       (SalesInvoiceHeader."Payment Reference" <> xSalesInvoiceHeader."Payment Reference") or (SalesInvoiceHeader."Company Bank Account Code" <> xSalesInvoiceHeader."Company Bank Account Code") or
+       (SalesInvoiceHeader."Package Tracking No." <> xSalesInvoiceHeader."Package Tracking No.");
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales Inv. Header - Edit", OnRunOnBeforeAssignValues, '', false, false)]
@@ -35,6 +45,7 @@ codeunit 70100 "EventSubscribers1"
     begin
 
         SalesInvoiceHeader."Payment Terms Code" := SalesInvoiceHeaderRec."Payment Terms Code";
+        SalesInvoiceHeader."Package Tracking No." := SalesInvoiceHeaderRec."Package Tracking No.";
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Whse.-Activity-Register", OnAfterRegisteredWhseActivHeaderInsert, '', false, false)]
