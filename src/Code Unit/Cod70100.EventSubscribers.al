@@ -6,8 +6,8 @@ codeunit 70100 "EventSubscribers1"
     [EventSubscriber(ObjectType::Table, Database::"Sales Invoice Header", OnAfterInsertEvent, '', false, false)]
     local procedure SetTrackingAssignedAtOnInsert(var Rec: Record "Sales Invoice Header"; RunTrigger: Boolean)
     begin
-        if (Rec."Package Tracking No." <> '') then
-            Rec."Tracking Assigned At" := CurrentDateTime();
+        if (Rec."Package Tracking No." <> '') and (Rec."Tracking Assigned At" = 0DT) then
+            Rec.Validate("Tracking Assigned At", CurrentDateTime());
     end;
 
 
@@ -23,7 +23,7 @@ codeunit 70100 "EventSubscribers1"
     begin
         if (Rec."Package Tracking No." <> '') and (Rec."Tracking Assigned At" = 0DT) then
             //if (Rec."Package Tracking No." <> '') and (Rec."Package Tracking No." <> xRec."Package Tracking No.") then
-            Rec."Tracking Assigned At" := CurrentDateTime();
+           Rec.Validate("Tracking Assigned At", CurrentDateTime());
     end;
 
 
