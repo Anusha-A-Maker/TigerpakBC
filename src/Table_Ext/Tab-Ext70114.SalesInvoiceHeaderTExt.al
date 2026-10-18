@@ -78,4 +78,8 @@ tableextension 70114 "Sales Invoice Header TExt" extends "Sales Invoice Header"
 
     }
 
+    var
+
+        Freight: Codeunit "FreightIntegrationEmail";
+
 }
