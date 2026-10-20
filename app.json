@@ -2,7 +2,7 @@
   "id": "2cc9585b-d11d-4b9c-b39e-b8558554e040",
   "name": "Tigerpak-BC",
   "publisher": "Tigerpak",
-  "version": "26.10.19.00",
+  "version": "26.10.20.00",
   "brief": "",
   "target": "Cloud",
   "description": "",
@@ -35,6 +35,12 @@
       "id" : "51def875-9c83-4326-a92a-fa50b262cd45",
       "name" : "WT-BackOrders",
       "version" : "26.3.17.2",
+      "publisher" : "Wild-Tech"
+      },
+       {
+      "id" : "79715f43-6720-4902-8228-f525fd7c0fb1",
+      "name" : "Tigerpak-Label Printing",
+      "version" : "28.10.5.0",
       "publisher" : "Wild-Tech"
       }
 
