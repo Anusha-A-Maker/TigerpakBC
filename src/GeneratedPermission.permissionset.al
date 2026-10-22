@@ -49,6 +49,8 @@ permissionset 70101 GeneratedPermtp
         page "Package Type_DG"=X,
         page "Packing Group_DG"=X,
         page "Price List Lines"=X,
-        page Shipping_DG=X;
+        page Shipping_DG=X,
+        report "US Expiry Date Audit"=X,
+        codeunit "Lot Info Events Handler"=X,
+        page "UN Number_DG"=X;
 }
-        
