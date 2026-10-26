@@ -24,17 +24,18 @@ tableextension 70101 "Item_T-Ext" extends Item
             DataClassification = ToBeClassified;
 
             //Trigger OnValidate()
-           // begin
+            // begin
 
-              //  if ("US-Expiry Date" > Today()) and ("US-Expiry Date" <= CalcDate('<1M>', Today())) then begin
-               //     "Expired/Cancelled" := true;
-               //     "Purchasing Blocked" := true;
-               // end
-               // else begin
-               //     "Expired/Cancelled" := false;
-                 //   "Purchasing Blocked" := false;
-             //   end;
-        //    end;
+            //  if ("US-Expiry Date" > Today()) and ("US-Expiry Date" <= CalcDate('<1M>', Today())) then begin
+            //     "Expired/Cancelled" := true;
+            //     "Purchasing Blocked" := true;
+            // end
+            // else begin
+            //     "Expired/Cancelled" := false;
+            //   "Purchasing Blocked" := false;
+            //   end;
+            //    end;
+
 
         }
         field(70104; "US-Agreed Months Stock on Hand"; Decimal)

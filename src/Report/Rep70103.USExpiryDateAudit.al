@@ -40,13 +40,24 @@ report 70103 "US Expiry Date Audit"
 
       trigger OnPreDataItem()
       begin
-        Item.SetFilter("US-Expiry Date", '<>%1&<=%2', 0D, CalcDate('<1M>', Today()));
+        ExpiryDateThreshold := CalcDate('<1M>', Today());
       end;
 
       trigger OnAfterGetRecord()
+      var
+        IsExpiryWithinThreshold: Boolean;
       begin
-        if Item."Purchasing Blocked" and Item."Expired/Cancelled" then
-          CurrReport.Skip();
+        IsExpiryWithinThreshold :=
+          (Item."US-Expiry Date" <> 0D) and
+          (Item."US-Expiry Date" <= ExpiryDateThreshold);
+        if (Item."Purchasing Blocked" = IsExpiryWithinThreshold) and
+           (Item."Expired/Cancelled" = IsExpiryWithinThreshold)
+        then
+          exit;
+
+        Item."Purchasing Blocked" := IsExpiryWithinThreshold;
+        Item."Expired/Cancelled" := IsExpiryWithinThreshold;
+        Item.Modify(true);
       end;
     }
   }
@@ -60,4 +71,7 @@ report 70103 "US Expiry Date Audit"
       Caption = 'US Expiry Date Audit';
     }
   }
+
+  var
+    ExpiryDateThreshold: Date;
 }
