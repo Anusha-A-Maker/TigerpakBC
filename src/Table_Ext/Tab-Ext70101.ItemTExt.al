@@ -34,6 +34,18 @@ tableextension 70101 "Item_T-Ext" extends Item
             DataClassification = ToBeClassified;
         }
 
+        field(70120; "Expired/Cancelled"; Boolean)
+        {
+            Caption = 'Expired/Cancelled';
+            DataClassification = ToBeClassified;
+        }
+
+        field(70121; "US Expiry Comments"; Text[100])
+        {
+            Caption = 'US Expiry Comments';
+            DataClassification = ToBeClassified;
+        }
+
         modify(Classification)
         {
             trigger OnAfterValidate()
