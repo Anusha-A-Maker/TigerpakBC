@@ -1,0 +1,432 @@
+{
+  "info": {
+    "_postman_id": "7669306b-5db4-4aeb-98b7-b7313a54c9a1",
+    "name": "Tigerpak Cash Receipt Automation",
+    "description": "Sandbox test collection for the Tigerpak Cash Receipt custom APIs. Set the collection variables before sending requests. The create request writes a draft General Journal Line; apply/clear requests update customer ledger application marks. Nothing in this collection posts a journal.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "tenantId",
+      "value": "YOUR_TENANT_ID",
+      "type": "string"
+    },
+    {
+      "key": "environmentName",
+      "value": "Sandbox",
+      "type": "string"
+    },
+    {
+      "key": "companyId",
+      "value": "YOUR_COMPANY_ID",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "journalTemplateName",
+      "value": "CASHREC",
+      "type": "string"
+    },
+    {
+      "key": "journalBatchName",
+      "value": "EXTERNAL",
+      "type": "string"
+    },
+    {
+      "key": "lineNumber",
+      "value": "10000",
+      "type": "string"
+    },
+    {
+      "key": "documentNumber",
+      "value": "POSTMAN-PAY-001",
+      "type": "string"
+    },
+    {
+      "key": "postingDate",
+      "value": "2026-10-29",
+      "type": "string"
+    },
+    {
+      "key": "customerNumber",
+      "value": "C10000",
+      "type": "string"
+    },
+    {
+      "key": "currencyCode",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "paymentAmount",
+      "value": "-125.50",
+      "type": "string"
+    },
+    {
+      "key": "balancingAccountType",
+      "value": "Bank Account",
+      "type": "string"
+    },
+    {
+      "key": "balancingAccountNumber",
+      "value": "BANK",
+      "type": "string"
+    },
+    {
+      "key": "journalLineSystemId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invoiceSystemId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "amountToApply",
+      "value": "125.50",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Setup and discovery",
+      "item": [
+        {
+          "name": "Get companies",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.businesscentral.dynamics.com/v2.0/{{tenantId}}/{{environmentName}}/api/v2.0/companies",
+              "protocol": "https",
+              "host": [
+                "api",
+                "businesscentral",
+                "dynamics",
+                "com"
+              ],
+              "path": [
+                "v2.0",
+                "{{tenantId}}",
+                "{{environmentName}}",
+                "api",
+                "v2.0",
+                "companies"
+              ]
+            },
+            "description": "Run this first if you need to find the company ID. Copy the desired company's id from the response into the companyId collection variable."
+          },
+          "response": []
+        },
+        {
+          "name": "Get custom API metadata",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml"
+              }
+            ],
+            "url": {
+              "raw": "https://api.businesscentral.dynamics.com/v2.0/{{tenantId}}/{{environmentName}}/api/tigerpak/cashReceipts/v1.0/$metadata",
+              "protocol": "https",
+              "host": [
+                "api",
+                "businesscentral",
+                "dynamics",
+                "com"
+              ],
+              "path": [
+                "v2.0",
+                "{{tenantId}}",
+                "{{environmentName}}",
+                "api",
+                "tigerpak",
+                "cashReceipts",
+                "v1.0",
+                "$metadata"
+              ]
+            },
+            "description": "Inspect the published service metadata to confirm entity fields, action names, and action parameter names for the deployed extension version."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Draft payment lines",
+      "item": [
+        {
+          "name": "Create draft cash receipt line",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.id) {",
+                  "        pm.collectionVariables.set('journalLineSystemId', response.id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"journalTemplateName\": \"{{journalTemplateName}}\",\n  \"journalBatchName\": \"{{journalBatchName}}\",\n  \"lineNumber\": {{lineNumber}},\n  \"documentType\": \"Payment\",\n  \"documentNumber\": \"{{documentNumber}}\",\n  \"postingDate\": \"{{postingDate}}\",\n  \"accountType\": \"Customer\",\n  \"accountNumber\": \"{{customerNumber}}\",\n  \"currencyCode\": \"{{currencyCode}}\",\n  \"amount\": {{paymentAmount}},\n  \"balancingAccountType\": \"{{balancingAccountType}}\",\n  \"balancingAccountNumber\": \"{{balancingAccountNumber}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.businesscentral.dynamics.com/v2.0/{{tenantId}}/{{environmentName}}/api/tigerpak/cashReceipts/v1.0/companies({{companyId}})/cashReceiptJournalLines",
+              "protocol": "https",
+              "host": [
+                "api",
+                "businesscentral",
+                "dynamics",
+                "com"
+              ],
+              "path": [
+                "v2.0",
+                "{{tenantId}}",
+                "{{environmentName}}",
+                "api",
+                "tigerpak",
+                "cashReceipts",
+                "v1.0",
+                "companies({{companyId}})",
+                "cashReceiptJournalLines"
+              ]
+            },
+            "description": "Creates one draft customer payment. Change all sample values first and use a test company and dedicated batch. Customer payment amounts are negative. A successful response saves its id to journalLineSystemId."
+          },
+          "response": []
+        },
+        {
+          "name": "List draft cash receipt lines",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.businesscentral.dynamics.com/v2.0/{{tenantId}}/{{environmentName}}/api/tigerpak/cashReceipts/v1.0/companies({{companyId}})/cashReceiptJournalLines",
+              "protocol": "https",
+              "host": [
+                "api",
+                "businesscentral",
+                "dynamics",
+                "com"
+              ],
+              "path": [
+                "v2.0",
+                "{{tenantId}}",
+                "{{environmentName}}",
+                "api",
+                "tigerpak",
+                "cashReceipts",
+                "v1.0",
+                "companies({{companyId}})",
+                "cashReceiptJournalLines"
+              ],
+              "query": [
+                {
+                  "key": "$filter",
+                  "value": "journalTemplateName eq '{{journalTemplateName}}' and journalBatchName eq '{{journalBatchName}}'"
+                }
+              ]
+            },
+            "description": "Lists draft lines. Review them in the standard Cash Receipt Journal; this collection does not post them."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Invoice applications",
+      "item": [
+        {
+          "name": "Find open invoices for customer",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.businesscentral.dynamics.com/v2.0/{{tenantId}}/{{environmentName}}/api/tigerpak/cashReceipts/v1.0/companies({{companyId}})/customerLedgerApplications",
+              "protocol": "https",
+              "host": [
+                "api",
+                "businesscentral",
+                "dynamics",
+                "com"
+              ],
+              "path": [
+                "v2.0",
+                "{{tenantId}}",
+                "{{environmentName}}",
+                "api",
+                "tigerpak",
+                "cashReceipts",
+                "v1.0",
+                "companies({{companyId}})",
+                "customerLedgerApplications"
+              ],
+              "query": [
+                {
+                  "key": "$filter",
+                  "value": "customerNumber eq '{{customerNumber}}'"
+                }
+              ]
+            },
+            "description": "Lists open positive invoice entries for the selected customer. Copy an invoice id from the response into invoiceSystemId."
+          },
+          "response": []
+        },
+        {
+          "name": "Apply amount to invoice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"journalLineSystemId\": \"{{journalLineSystemId}}\",\n  \"amountToApply\": {{amountToApply}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.businesscentral.dynamics.com/v2.0/{{tenantId}}/{{environmentName}}/api/tigerpak/cashReceipts/v1.0/companies({{companyId}})/customerLedgerApplications({{invoiceSystemId}})/Microsoft.NAV.SetPaymentApplication",
+              "protocol": "https",
+              "host": [
+                "api",
+                "businesscentral",
+                "dynamics",
+                "com"
+              ],
+              "path": [
+                "v2.0",
+                "{{tenantId}}",
+                "{{environmentName}}",
+                "api",
+                "tigerpak",
+                "cashReceipts",
+                "v1.0",
+                "companies({{companyId}})",
+                "customerLedgerApplications({{invoiceSystemId}})",
+                "Microsoft.NAV.SetPaymentApplication"
+              ]
+            },
+            "description": "Assigns an explicit partial/full amount to the invoice for the selected draft payment. The payment and invoice currencies must match. Confirm action parameter casing against Get custom API metadata if required by your deployed version."
+          },
+          "response": []
+        },
+        {
+          "name": "Clear invoice application",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"journalLineSystemId\": \"{{journalLineSystemId}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://api.businesscentral.dynamics.com/v2.0/{{tenantId}}/{{environmentName}}/api/tigerpak/cashReceipts/v1.0/companies({{companyId}})/customerLedgerApplications({{invoiceSystemId}})/Microsoft.NAV.ClearPaymentApplication",
+              "protocol": "https",
+              "host": [
+                "api",
+                "businesscentral",
+                "dynamics",
+                "com"
+              ],
+              "path": [
+                "v2.0",
+                "{{tenantId}}",
+                "{{environmentName}}",
+                "api",
+                "tigerpak",
+                "cashReceipts",
+                "v1.0",
+                "companies({{companyId}})",
+                "customerLedgerApplications({{invoiceSystemId}})",
+                "Microsoft.NAV.ClearPaymentApplication"
+              ]
+            },
+            "description": "Clears the selected invoice's application against the specified draft payment. Run before assigning a corrected amount."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
