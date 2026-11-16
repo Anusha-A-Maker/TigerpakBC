@@ -36,29 +36,56 @@ report 70101 "US Expiry Date Audit"
                 Caption = 'Expired/Cancelled';
             }
 
+            // trigger OnPreDataItem()
+            // begin
+            //     ExpiryDateThreshold := CalcDate('<1M>', Today());
+            // end;
             trigger OnPreDataItem()
             begin
                 ExpiryDateThreshold := CalcDate('<1M>', Today());
             end;
 
+            //     trigger OnAfterGetRecord()
+            //     var
+            //         IsExpiryWithinThreshold: Boolean;
+            //     begin
+            //         IsExpiryWithinThreshold :=
+            // (Item."US-Expiry Date" <> 0D) and
+            // (Item."US-Expiry Date" <= ExpiryDateThreshold);
+            //         if (Item."Purchasing Blocked" = IsExpiryWithinThreshold) and
+            //            (Item."Expired/Cancelled" = IsExpiryWithinThreshold)
+            //         then
+            //             exit;
             trigger OnAfterGetRecord()
             var
                 IsExpiryWithinThreshold: Boolean;
+                ShouldBePurchasingBlocked: Boolean;
             begin
-                IsExpiryWithinThreshold :=
-        (Item."US-Expiry Date" <> 0D) and
-        (Item."US-Expiry Date" <= ExpiryDateThreshold);
-                if (Item."Purchasing Blocked" = IsExpiryWithinThreshold) and
-                   (Item."Expired/Cancelled" = IsExpiryWithinThreshold)
-                then
+                if Item."US-Expiry Date" = 0D then
                     exit;
 
                 Item."Purchasing Blocked" := IsExpiryWithinThreshold;
                 Item."Expired/Cancelled" := IsExpiryWithinThreshold;
                 Item.Modify(true);
+
+
+                IsExpiryWithinThreshold :=
+                     (Item."US-Expiry Date" <= ExpiryDateThreshold);
+                ShouldBePurchasingBlocked :=
+                  Item."Purchasing Blocked" or IsExpiryWithinThreshold;
+                if (Item."Purchasing Blocked" = ShouldBePurchasingBlocked) and
+                   (Item."Expired/Cancelled" = IsExpiryWithinThreshold)
+                then
+                    exit;
+
+                Item."Purchasing Blocked" := ShouldBePurchasingBlocked;
+                Item."Expired/Cancelled" := IsExpiryWithinThreshold;
+                Item.Modify(true);
             end;
         }
+
     }
+
 
     rendering
     {
@@ -69,6 +96,9 @@ report 70101 "US Expiry Date Audit"
             Caption = 'US Expiry Date Audit';
         }
     }
+
+    //     var
+    //         ExpiryDateThreshold: Date;
 
     var
         ExpiryDateThreshold: Date;
