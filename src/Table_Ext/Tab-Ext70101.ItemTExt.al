@@ -53,6 +53,16 @@ tableextension 70101 "Item_T-Ext" extends Item
             Caption = 'Expired/Cancelled';
             DataClassification = ToBeClassified;
         }
+        field(70121; "Limited Term"; Boolean)
+        {
+            Caption = 'Limited Term';
+            DataClassification = ToBeClassified;
+        }
+        field(70122; "PO Number"; Text[50])
+        {
+            Caption = 'PO Number';
+            DataClassification = ToBeClassified;
+        }
 
         modify(Classification)
         {
