@@ -14,7 +14,7 @@ pageextension 70120 "Item List Ext" extends "Item List"
                 ApplicationArea = All;
 
             }
-            field(Classification; Rec.Classification)
+            field(TP_Classification; Rec.TP_Classification)
             {
                 Caption = 'Classification';
                 ApplicationArea = All;
@@ -86,12 +86,29 @@ pageextension 70120 "Item List Ext" extends "Item List"
                 begin
                     Item.Reset();
                     //Item.SetRange("No.", Rec."No.");
-                    Item.SetRange(Classification, Rec.Classification::DISCONTINUED);
+                    Item.SetRange(TP_Classification, Rec.TP_Classification::DISCONTINUED);
                     if Item.FindFirst() then
                         repeat
                             Item."IA_Custom002" := Rec."IA_Custom002"::"Obsolete (O)";
                             Item.Modify();
                         until Item.Next() = 0;
+                end;
+            }
+
+            action("Update TP_Classification")
+            {
+                ApplicationArea = All;
+                Caption = 'Update TP_Classification';
+                Image = Action;
+
+                trigger OnAction()
+                var
+
+                begin
+                    repeat
+                        Rec.TP_Classification := Rec.Classification;
+                        Rec.Modify();
+                    until Rec.Next() = 0;
                 end;
             }
         }

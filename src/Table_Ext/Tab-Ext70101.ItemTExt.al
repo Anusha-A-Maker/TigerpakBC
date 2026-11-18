@@ -63,12 +63,19 @@ tableextension 70101 "Item_T-Ext" extends Item
             Caption = 'PO Number';
             DataClassification = ToBeClassified;
         }
+        field(70130; TP_Classification; Option)
+        {
+            Caption = 'TP_Classification';
+            OptionMembers = NORMAL,ONEOFF,OVERSTOCK,"INTERNAL ADMIN CODE",NEWCODE,DISCONTINUED,"SLOW MOVER","COMPONENT CODE";
+            DataClassification = ToBeClassified;
 
-        modify(Classification)
+        }
+
+        modify(TP_Classification)
         {
             trigger OnAfterValidate()
             begin
-                if Rec.Classification = rec.Classification::DISCONTINUED then
+                if Rec.TP_Classification = rec.TP_Classification::DISCONTINUED then
                     Rec."IA_Custom002" := rec.IA_Custom002::"Obsolete (O)"
 
             end;
