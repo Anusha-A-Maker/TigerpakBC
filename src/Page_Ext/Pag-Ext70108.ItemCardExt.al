@@ -163,6 +163,18 @@ pageextension
                     ApplicationArea = All;
 
                 }
+                field("Limited Term"; Rec."Limited Term")
+                {
+                    Caption = 'Limited Term';
+                    ApplicationArea = All;
+
+                }
+                field("PO Number"; Rec."PO Number")
+                {
+                    Caption = 'PO Number';
+                    ApplicationArea = All;
+
+                }
                 // field("US-Actual Stock on Hand"; Rec."US-Actual Stock on Hand")
                 // {
                 //     Caption = 'US-Actual Stock on Hand';
