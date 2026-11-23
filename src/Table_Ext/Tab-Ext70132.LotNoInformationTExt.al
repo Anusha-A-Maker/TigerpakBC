@@ -13,7 +13,16 @@ tableextension 70132 "Lot No. Information TExt" extends "Lot No. Information"
             DataClassification = ToBeClassified;
                 TableRelation = "Item Ledger Entry"."Expiration Date" where("Lot No." = field("Lot No."), "Item No." = field("Item No."));
         }
-        
+        field(70111; "Quantity"; Decimal)
+        {
+            Caption = 'Quantity';
+            FieldClass = FlowField;
+            CalcFormula = sum("Item Ledger Entry".Quantity where("Item No." = field("Item No."),
+                                                                  "Variant Code" = field("Variant Code"),
+                                                                  "Lot No." = field("Lot No.")));
+            Editable = false;
+        }
+
     }
 
     trigger oninsert()
