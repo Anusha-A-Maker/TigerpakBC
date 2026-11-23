@@ -46,6 +46,12 @@ report 70105 "Lot No Label by Quantity"
                 column(LotNo_2D; LotNoQRCode)
                 {
                 }
+                column(Expiration_Date; ExpirationDateLabel)
+                {
+                }
+                column(ExpirationDate; "Lot No. Information"."Expiration Date")
+                {
+                }
 
                 trigger OnPreDataItem()
                 begin
@@ -102,4 +108,6 @@ report 70105 "Lot No Label by Quantity"
         LotNoCode: Text;
         LotNoQRCode: Text;
         NumberOfCopies: Integer;
+        Expiration_Date: Text[30];
+        ExpirationDateLabel: Label 'Expiration Date';
 }
