@@ -220,6 +220,19 @@ tableextension 70100 "Sales Header T-Ext" extends "Sales Header"
                 end;
             end;
         }
+
+        field(70410; "Claude Notes"; Text[500])
+        {
+            Caption = 'Claude Notes';
+            DataClassification = CustomerContent;
+        }
+
+        field(70411; "Claude Notes Blob"; Blob)
+        {
+            Caption = 'Claude Notes';
+            DataClassification = CustomerContent;
+        }
+
     }
 
 
@@ -291,7 +304,6 @@ tableextension 70100 "Sales Header T-Ext" extends "Sales Header"
 
 
 }
-
 
 
 

@@ -75,6 +75,18 @@ tableextension 70114 "Sales Invoice Header TExt" extends "Sales Invoice Header"
                     "Tracking Assigned At" := CurrentDateTime();
             end;
         }
+        field(70410; "Claude Notes"; Text[500])
+        {
+            Caption = 'Claude Notes';
+            DataClassification = CustomerContent;
+        }
+
+
+        field(70411; "Claude Notes Blob"; Blob)
+        {
+            Caption = 'Claude Notes';
+            DataClassification = CustomerContent;
+        }
 
     }
 

@@ -22,7 +22,25 @@ pageextension 70137 "Posted Sales Invoice Ext" extends "Posted Sales Invoice"
                 ToolTip = 'Specifies when the package tracking number was last assigned to the posted sales invoice.';
             }
         }
+        addafter("Work Description")
+        {
+            group("ClaudeNotes")
+            {
+                Caption = 'Claude Notes';
+                field(ClaudeNotesText; ClaudeNotesText)
+                {
+                    ApplicationArea = all;
+                    Caption = 'Claude Notes';
+                    Style = Favorable;
+                    Editable = false;
+                    MultiLine = true;
+                }
+            }
+        }
     }
+
+    var
+        ClaudeNotesText: Text;
 
 
 }

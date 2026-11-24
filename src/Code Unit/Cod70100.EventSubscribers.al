@@ -285,6 +285,8 @@ codeunit 70100 "EventSubscribers1"
         SIH: Record "Sales Invoice Header";
         RWAH: Record "Registered Whse. Activity Hdr.";
     begin
+
+
         if SalesCrMemoHeader2.Get(SalesCrMemoHeader."No.") then begin
             SalesCrMemoLine2.SetRange("Document No.", SalesCrMemoHeader."No.");
             if SalesCrMemoLine2.FindSet() then
@@ -339,6 +341,8 @@ codeunit 70100 "EventSubscribers1"
 
 
     end;
+
+
 
     procedure UpdatePickDuration()
     var
@@ -1191,5 +1195,3 @@ codeunit 70100 "EventSubscribers1"
 
 
 }
-
-
