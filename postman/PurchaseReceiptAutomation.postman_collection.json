@@ -1,0 +1,317 @@
+{
+  "info": {
+    "_postman_id": "16c6c05b-88ea-4613-afda-6172eead567b",
+    "name": "Tigerpak Purchase Receipt Automation",
+    "description": "Sandbox-only collection for the custom Get Receipt Lines OData V4 codeunit service. It adds posted purchase receipt lines to an existing open purchase invoice; it never posts or approves a document. Configure the collection variables before use.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "bcBaseUrl",
+      "value": "https://api.businesscentral.dynamics.com/v2.0/YOUR_TENANT_ID/Sandbox",
+      "type": "string"
+    },
+    {
+      "key": "tenantId",
+      "value": "YOUR_TENANT_ID",
+      "type": "string"
+    },
+    {
+      "key": "environmentName",
+      "value": "Sandbox",
+      "type": "string"
+    },
+    {
+      "key": "companyName",
+      "value": "YOUR_SANDBOX_COMPANY",
+      "type": "string"
+    },
+    {
+      "key": "serviceName",
+      "value": "PurchaseRecieptAPI",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invoiceNo",
+      "value": "YOUR_OPEN_PURCHASE_INVOICE",
+      "type": "string"
+    },
+    {
+      "key": "receiptNo",
+      "value": "YOUR_UNINVOICED_POSTED_RECEIPT",
+      "type": "string"
+    },
+    {
+      "key": "secondReceiptNo",
+      "value": "YOUR_SECOND_UNINVOICED_POSTED_RECEIPT",
+      "type": "string"
+    },
+    {
+      "key": "mismatchInvoiceNo",
+      "value": "OPEN_INVOICE_FOR_DIFFERENT_VENDOR",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Get Receipt Lines",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"invoiceNo\": \"{{invoiceNo}}\",\r\n  \"receiptNo\": \"{{receiptNo}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{bcBaseUrl}}/ODataV4/{{serviceName}}_GetReceiptLines?company={{companyName}}",
+          "host": [
+            "{{bcBaseUrl}}"
+          ],
+          "path": [
+            "ODataV4",
+            "{{serviceName}}_GetReceiptLines"
+          ],
+          "query": [
+            {
+              "key": "company",
+              "value": "{{companyName}}"
+            }
+          ]
+        },
+        "description": "Adds an eligible posted receipt to the open purchase invoice using codeunit 74 Purch.-Get Receipt. A receipt can be added only once to the same invoice."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Request succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "const response = pm.response.json();",
+              "pm.test('OData returned a JSON payload', function () {",
+              "    pm.expect(response).to.have.property('value');",
+              "});",
+              "const result = JSON.parse(response.value);",
+              "pm.test('At least one invoice line was added', function () {",
+              "    pm.expect(result.linesCreated).to.be.above(0);",
+              "});",
+              "pm.test('Updated invoice totals are returned', function () {",
+              "    pm.expect(result).to.have.property('amount');",
+              "    pm.expect(result).to.have.property('amountIncludingVAT');",
+              "});",
+              "pm.collectionVariables.set('lastLinesCreated', String(result.linesCreated));",
+              "pm.collectionVariables.set('lastAmount', String(result.amount));",
+              "pm.collectionVariables.set('lastAmountIncludingVAT', String(result.amountIncludingVAT));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Add a different receipt to the same invoice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"invoiceNo\": \"{{invoiceNo}}\",\r\n  \"receiptNo\": \"{{secondReceiptNo}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{bcBaseUrl}}/ODataV4/{{serviceName}}_GetReceiptLines?company={{companyName}}",
+          "host": [
+            "{{bcBaseUrl}}"
+          ],
+          "path": [
+            "ODataV4",
+            "{{serviceName}}_GetReceiptLines"
+          ],
+          "query": [
+            {
+              "key": "company",
+              "value": "{{companyName}}"
+            }
+          ]
+        },
+        "description": "Optional positive test. Uses a different posted receipt for the same vendor and invoice."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Second distinct receipt succeeded', function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "const result = JSON.parse(pm.response.json().value);",
+              "pm.test('Second receipt created lines', function () {",
+              "    pm.expect(result.linesCreated).to.be.above(0);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject the same receipt twice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"invoiceNo\": \"{{invoiceNo}}\",\r\n  \"receiptNo\": \"{{receiptNo}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{bcBaseUrl}}/ODataV4/{{serviceName}}_GetReceiptLines?company={{companyName}}",
+          "host": [
+            "{{bcBaseUrl}}"
+          ],
+          "path": [
+            "ODataV4",
+            "{{serviceName}}_GetReceiptLines"
+          ],
+          "query": [
+            {
+              "key": "company",
+              "value": "{{companyName}}"
+            }
+          ]
+        },
+        "description": "Run only after the Get Receipt Lines request succeeds. The action should return an error and leave the invoice unchanged."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Duplicate receipt was rejected', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400, 500]);",
+              "});",
+              "pm.test('Business Central returned an error body', function () {",
+              "    pm.expect(pm.response.text()).to.include('already been added');",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reject a vendor mismatch",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"invoiceNo\": \"{{mismatchInvoiceNo}}\",\r\n  \"receiptNo\": \"{{receiptNo}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{bcBaseUrl}}/ODataV4/{{serviceName}}_GetReceiptLines?company={{companyName}}",
+          "host": [
+            "{{bcBaseUrl}}"
+          ],
+          "path": [
+            "ODataV4",
+            "{{serviceName}}_GetReceiptLines"
+          ],
+          "query": [
+            {
+              "key": "company",
+              "value": "{{companyName}}"
+            }
+          ]
+        },
+        "description": "Negative test. Set mismatchInvoiceNo to an open purchase invoice for a different vendor than receiptNo."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Vendor mismatch was rejected', function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400, 500]);",
+              "});",
+              "pm.test('Business Central returned a vendor mismatch error', function () {",
+              "    pm.expect(pm.response.text()).to.include('belongs to vendor');",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -69,8 +69,6 @@ report 70105 "Lot No Label by Quantity"
                 if "Lot No." = '' then
                     CurrReport.Skip();
 
-                CalcFields(Quantity);
-                NumberOfCopies := Round(Abs(Quantity), 1, '>');
                 if NumberOfCopies <= 0 then
                     CurrReport.Skip();
 
@@ -89,6 +87,36 @@ report 70105 "Lot No Label by Quantity"
                 LotNoQRCode := BarcodeFontProvider2D.EncodeFont(BarcodeString, BarcodeSymbology2D);
             end;
         }
+    }
+
+    requestpage
+    {
+        SaveValues = true;
+
+        layout
+        {
+            area(Content)
+            {
+                group(Options)
+                {
+                    Caption = 'Options';
+
+                    field(NumberOfCopies; NumberOfCopies)
+                    {
+                        ApplicationArea = All;
+                        Caption = 'No. of Copies';
+                        MinValue = 1;
+                        ToolTip = 'Specifies the number of copies to print for each selected lot number.';
+                    }
+                }
+            }
+        }
+
+        trigger OnOpenPage()
+        begin
+            if NumberOfCopies <= 0 then
+                NumberOfCopies := 1;
+        end;
     }
 
     rendering
